@@ -20,9 +20,9 @@ app.use('/api/boards', boardRoutes);
 app.use('/api/boards', columnRoutes); // columns nested under boards
 app.use('/api/columns', taskRoutes);  // tasks nested under columns
 app.use('/api/tasks', taskRoutes);    // for task actions like move/delete
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/workstation-api/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.APP_PORT || 5001;
 
 sequelize.authenticate()
   .then(() => {
