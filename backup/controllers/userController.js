@@ -33,26 +33,9 @@ exports.getProfile = async (req, res) => {
 // Admin: list all users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.findAll({ attributes: ['id', 'email', 'role'], paranoid: false });
-    users.map(u => ({
-      ...u.get(),
-      isDeleted: !!u.deletedAt
-    }));
+    const users = await User.findAll({ attributes: ['id', 'email', 'role'] });
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
-exports.softDeleteUser = async (req, res) => {
-  try {
-    const user = await User.findByPk(req.params.id);
-    if (!user) return res.status(404).json({ msg: 'User not found' });
-
-    await user.destroy();  // Soft delete
-    res.json({ msg: 'User soft-deleted' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-

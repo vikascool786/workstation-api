@@ -21,7 +21,7 @@ const authController = require('../controllers/authController');
  *                 type: string
  *               role:
  *                 type: string
- *                 enum: [user, admin, manager]
+ *                 enum: [user, admin]
  *     responses:
  *       201:
  *         description: User successfully registered
@@ -54,6 +54,5 @@ router.post('/register', authController.register);
  *         description: Invalid credentials
  */
 router.post('/login', authController.login);
-router.get('/verify-email', authController.verifyEmail);
 
 module.exports = router;

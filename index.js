@@ -9,20 +9,37 @@ const columnRoutes = require('./routes/columns');
 const taskRoutes = require('./routes/tasks');
 const userRoutes = require('./routes/users');
 const { specs, swaggerUi } = require('./swagger');
+const companyRoutes = require('./routes/companies');
+const projectRoutes = require('./routes/projects');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/boards', boardRoutes);
-app.use('/api/boards', columnRoutes); // columns nested under boards
-app.use('/api/columns', taskRoutes);  // tasks nested under columns
-app.use('/api/tasks', taskRoutes);    // for task actions like move/delete
+// Auth and User Management
+app.use('/workstation-api/api/auth', authRoutes);
+app.use('/workstation-api/api/users', userRoutes); // Admin can list, assign roles etc.
+
+// Board & Column Management
+app.use('/workstation-api/api/boards', boardRoutes);  // /workstation-api/api/boards/*
+app.use('/workstation-api/api/boards', columnRoutes); // /workstation-api/api/boards/:id/columns
+
+// Task Management
+app.use('/workstation-api/api/columns', taskRoutes);  // /workstation-api/api/columns/:id/tasks
+app.use('/workstation-api/api/tasks', taskRoutes);    // /workstation-api/api/tasks/:id actions
+
+//company Management
+app.use('/workstation-api/api/companies', companyRoutes);
+
+
+//Project Management
+app.use('/workstation-api/api', projectRoutes);
+
+// Swagger Docs
 app.use('/workstation-api/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-const PORT = process.env.APP_PORT || 5001;
+
+const PORT = process.env.PORT || 5000;
 
 sequelize.authenticate()
   .then(() => {
