@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendVerificationEmail = async (to, token) => {
-  const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
+  const verificationUrl = `https://vitsolutions24x7.com/workstation/verify-email?token=${token}`;
   const html = verificationTemplate(verificationUrl, to);
 
   await transporter.sendMail({
